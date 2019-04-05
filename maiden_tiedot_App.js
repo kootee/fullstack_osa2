@@ -13,7 +13,7 @@ const Filter = (props) => {
   )
 }
 
-const ShowCountries = ({filteredList}) => {
+const ShowCountries = ({filteredList, handleClick}) => {
   if (filteredList.length > 10) {
     return (
       <p>too many matches, specify another filter</p>
@@ -35,7 +35,7 @@ const ShowCountries = ({filteredList}) => {
     )
   } else {
     return (
-      filteredList.map(country => <p key={country.name}>{country.name}</p>)
+      filteredList.map(country => <p key={country.name}>{country.name} <button onClick={handleClick()} value={country.name}>show</button></p>)
     )
   }
 }
@@ -62,12 +62,16 @@ const App = () => {
   
   console.log(countriesList)
   console.log(filteredList)
+
+  const clickCountry = (event) => {
+    setQuery(event.target.value)
+  }
   
   return (
     <div>
       <h1>look for countries</h1>
       <Filter value={query} handleInput={handleFilterChange}/>
-      <ShowCountries filteredList={filteredList} />
+      <ShowCountries filteredList={filteredList} handleClick={ () => clickCountry}/>
     </div>
   )
 }
